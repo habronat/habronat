@@ -14,6 +14,6 @@ public class CrawlerApplication {
         ApplicationContext ctx = SpringApplication.run(CrawlerApplication.class, args);
         HttpClient httpClient = ctx.getBean(HttpClient.class);
 
-        System.out.println(httpClient.get("http://irc.lv").getContent());
+        System.out.println(httpClient.get("http://marfeel.com").getContent());
     }
 }
