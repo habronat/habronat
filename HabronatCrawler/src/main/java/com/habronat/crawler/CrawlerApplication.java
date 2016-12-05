@@ -1,19 +1,25 @@
 package com.habronat.crawler;
 
-import com.habronat.crawler.client.HttpClient;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.habronat.domain.model.AdvertMetadata;
+import com.habronat.domain.model.RealEstateAdvert;
+import com.habronat.domain.repository.RealEstateAdvertRepository;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 
-@SpringBootApplication
 public class CrawlerApplication {
 
     public static void main(String[] args) throws IOException {
-        ApplicationContext ctx = SpringApplication.run(CrawlerApplication.class, args);
-        HttpClient httpClient = ctx.getBean(HttpClient.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(CrawlerConfiguration.class);
+        RealEstateAdvertRepository realEstateAdvertRepository = ctx.getBean(RealEstateAdvertRepository.class);
 
-        System.out.println(httpClient.get("http://marfeel.com").getContent());
+        AdvertMetadata advertMetadata = new AdvertMetadata();
+        advertMetadata.setUrl("test1.com");
+
+        RealEstateAdvert advert = new RealEstateAdvert();
+        advert.setAdvertMetadata(advertMetadata);
+
+        realEstateAdvertRepository.save(advert);
     }
 }
